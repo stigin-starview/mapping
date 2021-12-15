@@ -15,15 +15,42 @@ Type: %s <br>
 Height: %s m
 """
 
+def VolcanoColors(type):
+    if type == "Stratovolcano":
+        return "red"
+    elif type == "Submarine":
+        return "lightblue"
+    else:
+        return "green"
+
 fg = folium.FeatureGroup(name = "Indian Map")
 
 for name, type, elev, lat, lon in zip(VolcanoName, VolcanoType, VolcanoElev, VolcanoLat, VolcanoLon):
     iframe = folium.IFrame(html = html % (name + " volcano", name, type , elev), width = 200, height = 100)
     # fg.add_child(folium.Marker(location = [lat, lon], popup = f"Name: {name}, Type: {type} , Elevation: {elev}m", icon = folium.Icon(color = 'green')))
-    fg.add_child(folium.Marker(location = [lat, lon], popup = folium.Popup(iframe), icon = folium.Icon(color = 'green')))
+    fg.add_child(folium.Marker(location = [lat, lon], popup = folium.Popup(iframe), icon = folium.Icon(color = VolcanoColors(type))))
 
 
 map.add_child(fg)
 
 map.save("IndianMap.html")
     
+
+
+"""" Below is a function that i used to find out how many different 
+    types of volcanoes are listed in the json file 
+
+def testing():
+    result = []                          
+    for ty in VolcanoType:
+            if any(ty in s for s in result):
+                continue
+            else:
+                result.append(ty)
+    
+    print(result)
+
+
+testing()
+
+"""
