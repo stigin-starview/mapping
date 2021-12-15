@@ -30,6 +30,9 @@ for name, type, elev, lat, lon in zip(VolcanoName, VolcanoType, VolcanoElev, Vol
     # fg.add_child(folium.Marker(location = [lat, lon], popup = f"Name: {name}, Type: {type} , Elevation: {elev}m", icon = folium.Icon(color = 'green')))
     fg.add_child(folium.Marker(location = [lat, lon], popup = folium.Popup(iframe), icon = folium.Icon(color = VolcanoColors(type))))
 
+    #  To add the popup as circle use the code below
+    # fg.add_child(folium.CircleMarker(location = [lat, lon], radius= 10, popup = folium.Popup(iframe), color = VolcanoColors(type), fill = True, fill_color = VolcanoColors(type)))
+
 
 map.add_child(fg)
 
