@@ -1,2 +1,2 @@
 # mapping
-view all country maps with extra infromation
+World map with extra geographical infromations
