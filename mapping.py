@@ -10,6 +10,8 @@ VolcanoElev = list(VolcanoData["elevation"])
 VolcanoLat = list(VolcanoData["lat"])
 VolcanoLon = list(VolcanoData["lon"])
 
+# PopulationData = pandas.read_json("resources/PopulationList.json")
+
 html = """<a href="https://www.google.com/search?q=%%22%s%%22" target="_blank"> <h3> %s:</h3> </a>
 Type: %s <br>
 Height: %s m
@@ -28,10 +30,14 @@ fg = folium.FeatureGroup(name = "Indian Map")
 for name, type, elev, lat, lon in zip(VolcanoName, VolcanoType, VolcanoElev, VolcanoLat, VolcanoLon):
     iframe = folium.IFrame(html = html % (name + " volcano", name, type , elev), width = 200, height = 100)
     # fg.add_child(folium.Marker(location = [lat, lon], popup = f"Name: {name}, Type: {type} , Elevation: {elev}m", icon = folium.Icon(color = 'green')))
-    fg.add_child(folium.Marker(location = [lat, lon], popup = folium.Popup(iframe), icon = folium.Icon(color = VolcanoColors(type))))
+    # fg.add_child(folium.Marker(location = [lat, lon], popup = folium.Popup(iframe), icon = folium.Icon(color = VolcanoColors(type))))
 
     #  To add the popup as circle use the code below
-    # fg.add_child(folium.CircleMarker(location = [lat, lon], radius= 10, popup = folium.Popup(iframe), color = VolcanoColors(type), fill = True, fill_color = VolcanoColors(type)))
+    fg.add_child(folium.CircleMarker(location = [lat, lon], radius= 10, popup = folium.Popup(iframe), color = VolcanoColors(type), fill = True, fill_color = VolcanoColors(type)))
+
+# Adding the population data informations
+
+fg.add_child(folium.GeoJson(data = (open("resources/PopulationList.json", "r", encoding = "utf-8-sig").read())))
 
 
 map.add_child(fg)
